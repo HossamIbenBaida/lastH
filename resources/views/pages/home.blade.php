@@ -435,7 +435,7 @@
         </section>
     </div>
     <div class="container">
-        <section class="tg-main-section haslayout  stretch_section" style="background-image:url(&quot;http://santemap.firstonenews.com/wp-content/uploads/2016/08/bgparallax-03.jpg&quot;) ; padding: 50px 89.5px; background-repeat: no-repeat; background-position: 0% 100%; background-size: cover; position: relative; left: -105px; box-sizing: border-box; width: 1349px;">
+        <section class="tg-main-section haslayout  stretch_section" ,style="background-image:url(&quot;http://santemap.firstonenews.com/wp-content/uploads/2016/08/bgparallax-03.jpg&quot;) padding: 50px 89.5px; background-repeat: no-repeat; background-position: 0% 100%; background-size: cover; position: relative; left: -105px; box-sizing: border-box; width: 1349px;">
 
             <div class="builder-items">
                 <div class="col-xs-12 col-md-12 builder-column ">

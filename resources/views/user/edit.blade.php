@@ -35,37 +35,23 @@
     @include('user.partials.rightbar_edit')
 @endsection
 @section('js')
-<script>
-
-
-    jQuery( document ).ready(function($) {
-        $("#form").submit( function() {
-            $('<input />').attr('type', 'hidden')
-                .attr('latitude', maps[0].markers[0].getPosition().lat())
-                .attr('longitude', maps[0].markers[0].getPosition().lng())
-                .appendTo('#form');
-            return true;
+    <script>
+        jQuery(document).ready(function ($) {
+            $("#form_address").submit(function () {
+                $('input[name=latitude]').val(maps[0].markers[0].getPosition().lat());
+                $('input[name=longitude]').val(maps[0].markers[0].getPosition().lng());
+                return true;
+            });
         });
-    });
-    $(".cities_select").select2({
-        maximumSelectionLength: 2
-    });
-    <script type="javascript" >
-        $('#profile-image').on('click', function() {
-            $('#profile-image-upload').click();
+        $(".cities_select").select2({
+            maximumSelectionLength: 2
         });
-</script>
-<script>
-    $("#profile").click(function() {
-
-        $("input[id='profile-image']").click();
-
-    });
-    $('#profile-image').change(function(){
-
-        $('.profile-form').submit();
-
-    });
-
-</script>
+        $("#profile").click(function() {
+            $("input[id='profile-image']").click();
+        });
+        $('#profile-image').change(function(){
+            $('.profile-form').submit();
+        });
+        $('div.alert').delay(3000).slideUp(300);
+    </script>
 @endsection

@@ -29,6 +29,9 @@
         <a href="{{route('user.edit')}}">Account</a>
     </li>
     <li class="list-group-item">
+        <a href="{{route('user.edit.password')}}">Update Password</a>
+    </li>
+    <li class="list-group-item">
         <a href="#">Danger-Zone
             <span class="glyphicon pull-right glyphicon-warning-sign"></span>
         </a>

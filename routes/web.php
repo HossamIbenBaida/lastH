@@ -36,3 +36,5 @@ Route::get('/packages', 'PagesController@packages')->name('packages');
 Route::get('/payement', 'PagesController@payement')->name('payement');
 Route::get('/drop', 'AdminPagesController@drop')->name('user.drop');
 Route::get('/Admin_Doc', 'AdminPagesController@Doctors')->name('DocController');
+Route::put('user/edit/password', 'UserController@update_password')->name('user.password');
+Route::get('user/edit/password', 'UserController@edit_password')->name('user.edit.password');

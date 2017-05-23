@@ -8,6 +8,7 @@ use App\User;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Image;
 
 
@@ -23,7 +24,23 @@ class UserController extends Controller
     {
         return view('user.profile');
     }
+    public function edit_profile()
+    {
+        $con = Auth::user()->contact;
+        $add = $con->address;
+        Mapper::map($add->latitude, $add->longitude, ['draggable' => true]);
+        $data = array('ville' => City::all());
+        return view('user.private.profile_edit')->withData($data);
+    }
 
+    public function edit_account()
+    {
+        $con = Auth::user()->contact;
+        $add = $con->address;
+        Mapper::map($add->latitude, $add->longitude, ['draggable' => true]);
+        $data = array('ville' => City::all());
+        return view('user.private.account_edit')->withData($data);
+    }
 
 
 //        $ava = $request->file('avatar');
@@ -47,7 +64,10 @@ class UserController extends Controller
 //        return redirect()->route('home');
 //        return redirect()->route('home');
 //    }
-
+    public function edit_password()
+    {
+        return view('user.password_edit');
+    }
         public function update_avatar(Request $request){
 
             // Handle the user upload of avatar
@@ -74,8 +94,8 @@ class UserController extends Controller
      */
     public function show($username)
 {
-    Mapper::map(31.1806282, -9.892244);
-    $user= User::where('username','=',$username)->first();
+    $user= User::where('username','=',$username)->first();    $add = $user->contact->address;
+    Mapper::map($add->latitude, $add->longitude);
     return view('user.public')->withUser($user);
 }
 
@@ -151,6 +171,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function update_password(Request $request)
+    {
+        //Validate the data
+        $this->validate($request, array(
+            'old_password' => 'required|string|min:6',
+            'password' => 'required|string|min:6|confirmed',
+        ));
+        session()->flash('message', 'Failed to update account details: old passwords doesn\'t match current password');
+        session()->flash('alert-class', 'alert-danger');
+        $user = Auth::user();
+        if (Hash::check($request->input('old_password'), $user->password)) {
+            // The passwords match...
+            //save the data to the database
+            $user->password = $request->input('password');
+            $user->save();
+            session()->flash('message', 'password updated successfully');
+            session()->flash('alert-class', 'alert-success');
+        }
+        return redirect()->route('user.edit');
+    }
     public function destroy($id)
     {
 
