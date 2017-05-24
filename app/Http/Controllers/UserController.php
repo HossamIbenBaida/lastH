@@ -9,6 +9,8 @@ use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 
@@ -23,14 +25,6 @@ class UserController extends Controller
     public function index()
     {
         return view('user.profile');
-    }
-    public function edit_profile()
-    {
-        $con = Auth::user()->contact;
-        $add = $con->address;
-        Mapper::map($add->latitude, $add->longitude, ['draggable' => true]);
-        $data = array('ville' => City::all());
-        return view('user.private.profile_edit')->withData($data);
     }
 
     public function edit_account()
@@ -121,7 +115,8 @@ class UserController extends Controller
         $con=Auth::user()->contact;
         $add=$con->address;
         Mapper::map($add->latitude,$add->longitude,['draggable' => true]);
-        $data=array('ville'=>City::all(),'userV'=>$add->city_id);
+        $data = array('ville' => City::all(),'userV'=>$add->city_id,'specialities'=>Speciality::all());
+//        $data=array('ville'=>City::all(),'userV'=>$add->city_id);
         return view('user.edit')->withData($data);
     }
 
@@ -184,7 +179,7 @@ class UserController extends Controller
         if (Hash::check($request->input('old_password'), $user->password)) {
             // The passwords match...
             //save the data to the database
-            $user->password = $request->input('password');
+            $user->password = bcrypt( $request->input('password'));
             $user->save();
             session()->flash('message', 'password updated successfully');
             session()->flash('alert-class', 'alert-success');
@@ -193,6 +188,35 @@ class UserController extends Controller
     }
     public function destroy($id)
     {
+
+    }
+    public function contact_us(Request $request){
+     $this->validate($request, [
+         'email'=>'required|email',
+         'subject'=>'min:3',
+         'message'=>'min:10',
+//         'phone' => 'required|regex:/(01)[0-9]{9}/'
+         'phone' => 'required|numeric|max:15'
+     ]);
+     $data = array(
+         'email'=>$request->email ,
+         'subject'=>$request->subject,
+         'body'=>$request->message ,
+         'name'=>$request->username ,
+         'phone'=> $request->phone
+
+     );
+     Mail::send('emails.contact',$data , function ($message) use($data){
+        $message->from($data['email']);
+        $message->to('bull@shit.com');
+        $message->subject($data['subject']);
+
+
+
+     });
+     Session::flash('success' , 'your Email was sent !');
+     return redirect('contact_us');
+//        redirect('Home');
 
     }
 }

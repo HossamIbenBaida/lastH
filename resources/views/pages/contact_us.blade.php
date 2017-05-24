@@ -46,11 +46,10 @@
                                                             <h2>refine search</h2>
                                                         </div>
 
-                                                        <form class="form-refinesearch tg-haslayout contact_form">
-                                                            <div class="message_contact theme-notification"></div>
+                                                        <form class="form-refinesearch tg-haslayout contact_form" action={{route('contact')}} method="post">
                                                             <fieldset>
+                                                                <div>{{ csrf_field() }}</div>
                                                                 <div class="row form-data" data-success="Message Sent." data-error="Message Fail." data-email="">
-                                                                    <input id="security" name="security" value="48bcdacdd2" type="hidden"><input name="_wp_http_referer" value="/wordpress/directory/contact-us/" type="hidden">
                                                                     <div class="col-sm-6">
                                                                         <div class="form-group">
                                                                             <input class="form-control" name="subject" placeholder="Subject" type="text">
@@ -63,7 +62,7 @@
                                                                     </div>
                                                                     <div class="col-sm-6">
                                                                         <div class="form-group">
-                                                                            <input class="form-control" name="useremail" placeholder="Email" type="email">
+                                                                            <input class="form-control" name="email" placeholder="Email" type="email">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">
@@ -73,7 +72,7 @@
                                                                     </div>
                                                                     <div class="col-sm-12">
                                                                         <div class="form-group">
-                                                                            <textarea class="form-control" name="description" placeholder="Message"></textarea>
+                                                                            <textarea class="form-control" name="message" placeholder="Message"></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-sm-6">

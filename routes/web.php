@@ -32,6 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('user/{username}', 'UserController@show')->name('user.show');
 Route::get('/homePage', 'PagesController@HomePage')->name('Home');
 Route::get('/contact_us', 'PagesController@contact_us')->name('contact_us');
+Route::post('/contact', 'UserController@contact_us')->name('contact');
+
 Route::get('/packages', 'PagesController@packages')->name('packages');
 Route::get('/payement', 'PagesController@payement')->name('payement');
 Route::get('/drop', 'AdminPagesController@drop')->name('user.drop');

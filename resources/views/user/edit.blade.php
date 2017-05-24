@@ -3,6 +3,8 @@
     @include('user.partials.leftbar')
 @endsection
 @section('user_content')
+    @include('user.specialities')
+
 
     <div class="panel panel-default">
         <div class="panel-heading">Edit Account</div>
@@ -34,6 +36,8 @@
 @section('rightbar')
     @include('user.partials.rightbar_edit')
 @endsection
+
+
 @section('js')
     <script>
         jQuery(document).ready(function ($) {
@@ -53,5 +57,10 @@
             $('.profile-form').submit();
         });
         $('div.alert').delay(3000).slideUp(300);
+
+
+    </script>
+    <script type="text/javascript">
+        $(".js-example-basic-multiple").select2();
     </script>
 @endsection
